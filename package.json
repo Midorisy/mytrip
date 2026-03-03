@@ -11,6 +11,7 @@
   "dependencies": {
     "normalize.css": "^8.0.1",
     "pinia": "^3.0.4",
+    "vant": "^4.9.22",
     "vue": "^3.5.12",
     "vue-router": "^4.6.4"
   },
