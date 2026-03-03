@@ -1,4 +1,4 @@
-import { instance } from "@/servers/request"
+import { instance } from "@/server/request"
 const key = 'N22BZ-3S5EW-3QSRA-YYKUZ-MLLYF-FXBSX'
 /**
  * 根据经纬度，返回腾讯地图提供的位置
