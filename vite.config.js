@@ -9,5 +9,14 @@ export default defineConfig({
     alias:{
       '@':path.resolve(__dirname,'./src')
     }
+  },
+  server:{
+    proxy:{
+      '/tencentmapapi': {
+        target: 'https://apis.map.qq.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/tencentmapapi/, ''),
+      }
+    }
   }
 })
