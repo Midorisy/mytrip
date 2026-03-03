@@ -4,7 +4,23 @@ export default [
         redirect:'/home'
     },
     {
+        name:'Home',
         path:'/home',
         component:()=>import('@/views/Home/Home.vue')
-    }
+    },
+    {
+        name:'Favor',
+        path:'/favor',
+        component:()=>import('@/views/Favor/Favor.vue')
+    },
+    {
+        name:'Order',
+        path:'/order',
+        component:()=>import('@/views/Order/Order.vue')
+    },
+    {
+        name:'Message',
+        path:'/message',
+        component:()=>import('@/views/Message/Message.vue')
+    },
 ]
