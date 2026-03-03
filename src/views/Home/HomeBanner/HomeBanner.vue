@@ -10,7 +10,10 @@
 
 <style scoped>
 .home-banner {
+
     img {
+        /* display: block; */
+        vertical-align: middle;
         width: 100%;
     }
 }
