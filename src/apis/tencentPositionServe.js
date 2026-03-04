@@ -1,4 +1,4 @@
-import { instance } from "@/server/request"
+import { instanceForTencentMap } from "@/server/request"
 const key = 'N22BZ-3S5EW-3QSRA-YYKUZ-MLLYF-FXBSX'
 /**
  * 根据经纬度，返回腾讯地图提供的位置
@@ -6,7 +6,7 @@ const key = 'N22BZ-3S5EW-3QSRA-YYKUZ-MLLYF-FXBSX'
  * @param {String} positionCoords  当前经纬度位置对象
  */
 export function tencentPositionServe(positionCoords) {
-   return instance.get('/tencentmapapi/ws/geocoder/v1',{
+   return instanceForTencentMap.get('/ws/geocoder/v1',{
     params:{
             key,
             location:positionCoords
