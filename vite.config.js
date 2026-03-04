@@ -16,6 +16,11 @@ export default defineConfig({
         target: 'https://apis.map.qq.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/tencentmapapi/, ''),
+      },
+      '/tujiaApi':{
+        target: 'https://m.tujia.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/tujiaApi/, ''),
       }
     }
   }
