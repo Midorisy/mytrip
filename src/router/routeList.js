@@ -23,4 +23,12 @@ export default [
         path:'/message',
         component:()=>import('@/views/Message/Message.vue')
     },
+    {
+        name:'City',
+        path:'/city',
+        component:()=>import('@/views/City/City.vue'),
+        meta:{
+            hideTabbar:true
+        }
+    }
 ]
