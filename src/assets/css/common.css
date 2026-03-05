@@ -1,3 +1,6 @@
 :root {
+    /* 主题色 */
     --primary-color:#ff9854;
+    /* 浅色背景 */
+    --tag-hot-color:#fff4ec;
 }
