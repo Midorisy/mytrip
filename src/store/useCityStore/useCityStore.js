@@ -74,6 +74,13 @@ export const useCityStore = defineStore("cityStore", () => {
     cityInfo.value = Info
   }
 
+  /**
+   * 清除历史城市列表内的数据
+   */
+  function clearHistoryList(country) {
+    historyCities.value[country] = []
+  }
+
   return {
     // 数据
     cityList,
@@ -85,7 +92,8 @@ export const useCityStore = defineStore("cityStore", () => {
     // 方法
     getCityList,
     changeCityInfo,
-    handleHistoryCity
+    handleHistoryCity,
+    clearHistoryList
   };
 });
 
