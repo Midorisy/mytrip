@@ -1,7 +1,7 @@
 <template>
     <div class="tabbar">
         <Tabbar v-model="currentIndex">
-            <template v-for="(item, index) in tabbarList">
+            <template v-for="(item, index) in tabbarList" :key="index" >
                 <TabbarItem :to="item.path">
                     <template v-slot:icon>
                         <img :src="getImageUrl(item[index !== currentIndex ? 'img' : 'imageActive'])">
@@ -19,21 +19,13 @@
 import { Tabbar, TabbarItem } from 'vant';
 import { getImageUrl } from '@/utils/getAssetURL'
 import tabbarList from '@/assets/data/tabbar';
-import { computed, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
-const router = useRouter()
+import { ref } from 'vue';
+
+
+
 const currentIndex = ref(1)
 
 
-
-function clickTabItem(index, item) {
-    currentIndex.value = index
-    router.push({
-        path: item.path
-    })
-    console.log(currentIndex.value);
-
-}
 
 </script>
 
