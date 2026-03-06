@@ -5,6 +5,22 @@
         </Tabs>
         <div class="content">
             <IndexBar highlight-color="#999" :index-list="indexList" :sticky="false">
+                <!-- 历史城市开始 -->
+                 <template v-if="historyShows">
+                    <IndexAnchor class="hot-title">历史城市<span class="clear">清除</span></IndexAnchor>
+                    <Cell>
+                        <template #title>
+                            <div class="hot-cities hsitory-city">
+                                <div class="city-cell " v-for="(city) in cityStore.historyCities[active]"
+                                    :key="city.cityId">
+                                    <span @click="clickCity(hotCity)" class="cityName">{{ city.cityName }}</span>
+                                </div>
+                            </div>
+                        </template>
+                    </Cell>
+                    </template>
+                <!-- 历史城市结束 -->
+                <!-- 热门城市开始 -->
                 <IndexAnchor class="hot-title" index="#"> 热门城市 </IndexAnchor>
                 <Cell>
                     <template #title>
@@ -16,10 +32,12 @@
                         </div>
                     </template>
                 </Cell>
-
+                <!-- 热门城市结束 -->
+                <!-- 列表开始 -->
                 <template v-for="(city) in contentData.cities" :key="city.group">
                     <IndexAnchor :index="city.group" />
-                    <Cell @click="clickCity(item)" v-for="(item) in city.cities" :key="item.cityId" :title="item.cityName" />
+                    <Cell @click="clickCity(item)" v-for="(item) in city.cities" :key="item.cityId"
+                        :title="item.cityName" />
                 </template>
             </IndexBar>
         </div>
@@ -39,10 +57,24 @@ const router = useRouter()
 //标签栏绑定的数据
 const active = ref(null);
 
+
+
 // 获取cityStore仓库
 const cityStore = useCityStore();
 cityStore.getCityList();
-const { cityList } = storeToRefs(cityStore);
+const { cityList, historyCities } = storeToRefs(cityStore);
+
+// 是否显示历史城市
+const historyShows = computed(() => {
+    //historyCities.value[active.value].length
+    if (!historyCities.value[active.value]) {
+        return false
+    }
+    if (historyCities.value[active.value].length===0) {
+        return false
+    }
+    return true
+})
 
 // 收集cityArea名字列表
 const cityArea = Object.keys(cityList.value).slice(0, 2);
@@ -66,7 +98,14 @@ const indexList = computed(() => {
 
 
 function clickCity(cityInfo) {
+
+    // 改变仓库内城市信息用于回显
     cityStore.changeCityInfo(cityInfo)
+
+    // 处理历史城市数据，传入选中城市和当前是中国还是海外
+    cityStore.handleHistoryCity(cityInfo, active.value)
+
+    // 返回上一页
     router.back()
 }
 
@@ -89,6 +128,7 @@ function clickCity(cityInfo) {
 
     /* 热门城市模块 */
     .content {
+
         height: calc(100vh - 32px - 44px);
         background-color: #f1f3f6;
         overflow-y: auto;
@@ -101,12 +141,19 @@ function clickCity(cityInfo) {
             &::before {
                 position: absolute;
                 left: 6px;
-                top: 8px;
+                top: 13px;
                 width: 3px;
                 height: 16px;
                 background-color: var(--primary-color);
                 content: "";
             }
+        }
+
+        /* 清除按钮的样式 */
+        .hot-title .clear {
+            position: absolute;
+            right: 20px;
+            color: #999;
         }
 
         /* 热门城市下方的展示列表 */
@@ -150,6 +197,21 @@ function clickCity(cityInfo) {
                     background-repeat: no-repeat;
                     background-size: 130px 115px;
                     background-position: 0px -102px;
+                }
+
+
+            }
+
+            /* 历史城市的列表 */
+            &.hsitory-city {
+                display: flex;
+                justify-content: left;
+                align-items: center;
+                padding: 0 2px;
+                height: 28px;
+
+                .city-cell {
+                    background-color: #f1f3f6;
                 }
             }
         }

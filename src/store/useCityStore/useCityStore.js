@@ -8,6 +8,7 @@ export const useCityStore = defineStore("cityStore", () => {
   const cityInfo = ref({
     cityName:'北京'
   })
+  const historyCities =ref({})
 
   // 国内(含港澳台)
   const cityGroup = computed(() => {
@@ -24,6 +25,35 @@ export const useCityStore = defineStore("cityStore", () => {
   });
 
   /**
+   * 处理历史选择城市的函数
+   * @param {Object} cityInfo 被选中的城市信息
+   * @param {String} country 国内地区或外国地区
+   */
+  function handleHistoryCity(cityInfo,country) {
+    // 如果历史城市内没有，就创建数组
+      if (!historyCities.value[country]) {
+        historyCities.value[country] = []
+      }
+        // 1.首先判断是否有重复城市，有的话就找出重复城市的索引
+    const repeatIndex = historyCities.value[country].findIndex((item) => {
+        return item === cityInfo
+    })
+    // 如果重复城市存在，就移除
+    if (repeatIndex!== -1) {
+        historyCities.value[country].splice(repeatIndex,1)
+        // 再将城市添加到首位
+        historyCities.value[country].unshift(cityInfo)
+    } else {
+        // 如果没有重复城市，就判断是否长度大于4
+        // 如果为真就先移除最后一位再添加第一位
+        if (historyCities.value[country].length>=4) {
+            historyCities.value[country].pop()
+        }
+        historyCities.value[country].unshift(cityInfo)
+    }
+  }
+
+  /**
    * 得到城市相关数据的func
    */
   async function getCityList() {
@@ -37,7 +67,7 @@ export const useCityStore = defineStore("cityStore", () => {
   }
 
   /**
-   * 改变单个城市信息的函数
+   * 改变仓库内单个城市信息的函数
    * @param {object} cityInfo 单个城市信息
    */
   function changeCityInfo(Info) {
@@ -51,9 +81,11 @@ export const useCityStore = defineStore("cityStore", () => {
     cityGroupOverSea,
     flowCityIds,
     cityInfo,
+    historyCities,
     // 方法
     getCityList,
-    changeCityInfo
+    changeCityInfo,
+    handleHistoryCity
   };
 });
 
