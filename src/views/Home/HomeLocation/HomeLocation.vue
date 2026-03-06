@@ -1,7 +1,7 @@
 <template>
     <div class="home-location">
         <div class="city" @click="toCityView">
-            广州
+            {{ cityStore.cityInfo.cityName }}
         </div>
         <div class="position" @click="clickMyPosition">
             <div class="mine">
@@ -15,13 +15,14 @@
 
 <script setup>
 import { tencentPositionServe } from '@/apis/tencentPositionServe';
+import { useCityStore } from '@/store/useCityStore/useCityStore';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
 const address_component = ref(null)
 const addressLoading = ref(false)
-
+const cityStore = useCityStore()
 
 
 /**

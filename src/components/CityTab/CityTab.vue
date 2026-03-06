@@ -10,16 +10,16 @@
                     <template #title>
                         <div class="hot-cities">
                             <div class="city-cell" v-for="hotCity in contentData.hotCities" :key="hotCity.cityId">
-                                <span class="cityName">{{ hotCity.cityName }}</span>
+                                <span @click="clickCity(hotCity)" class="cityName">{{ hotCity.cityName }}</span>
                                 <span v-if="hotCity.hot" class="fire-icon"></span>
                             </div>
                         </div>
                     </template>
                 </Cell>
 
-                <template v-for="(city, index) in contentData.cities" :key="city.group">
+                <template v-for="(city) in contentData.cities" :key="city.group">
                     <IndexAnchor :index="city.group" />
-                    <Cell v-for="(item, index) in city.cities" :key="item.cityId" :title="item.cityName" />
+                    <Cell @click="clickCity(item)" v-for="(item) in city.cities" :key="item.cityId" :title="item.cityName" />
                 </template>
             </IndexBar>
         </div>
@@ -31,6 +31,10 @@ import { Tab, Tabs, IndexBar, IndexAnchor, Cell } from "vant";
 import { computed, onMounted, ref, watch } from "vue";
 import { useCityStore } from "@/store/useCityStore/useCityStore";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+
+// 获取router
+const router = useRouter()
 
 //标签栏绑定的数据
 const active = ref(null);
@@ -54,13 +58,17 @@ const contentData = computed(() => {
 // index栏的内容
 const indexList = computed(() => {
     const cityLetters = contentData.value.cities.map((item) => {
-        console.log(contentData.hotCities);
         return item.group;
     });
 
     return ["#", ...cityLetters];
 });
 
+
+function clickCity(cityInfo) {
+    cityStore.changeCityInfo(cityInfo)
+    router.back()
+}
 
 </script>
 
