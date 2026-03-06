@@ -17,13 +17,10 @@
 
 <script setup>
 import { Tabbar, TabbarItem } from 'vant';
-import { getImageUrl } from '@/utils/getAssetURL'
-import tabbarList from '@/assets/data/tabbar';
 import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter()
 const currentIndex = ref(0)
-const isActive = ref(null)
 
 
 
