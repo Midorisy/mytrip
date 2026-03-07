@@ -95,6 +95,7 @@ function getMyPosition() {
     padding: 0 20px;
     font-size: 15px;
     align-items: center;
+    border-bottom: 1px solid #f2f2f2;
 
     .city {
         flex: 1;
