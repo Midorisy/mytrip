@@ -98,7 +98,7 @@ function getMyPosition() {
 
     .city {
         flex: 1;
-        color: #666;
+        /* color: #666; */
     }
 
     .position {
@@ -106,6 +106,9 @@ function getMyPosition() {
         align-items: center;
         color: #666;
 
+        .mine {
+            font-size: 13px;
+        }
         img {
             margin-left: 5px;
             width: 15px;
