@@ -185,7 +185,7 @@ function clickCity(cityInfo) {
   /* 热门城市模块 */
   .content {
     height: calc(100vh - 32px - 44px);
-    background-color: #f1f3f6;
+    background-color: var(--light-background-color);
     overflow-y: auto;
 
     /* 组件内的样式 */
@@ -264,7 +264,7 @@ function clickCity(cityInfo) {
         height: 28px;
 
         .city-cell {
-          background-color: #f1f3f6;
+          background-color: var(--light-background-color);
         }
       }
     }
