@@ -34,7 +34,7 @@ import HotTags from './Hot-Tags/HotTags.vue';
 
     .search-button{
         border: none;
-        background-image: linear-gradient(90deg, #fa8c1d, #fcaf3f);
+        background-image: var(--button-linear-gradient);
         font-size: 18px;
         font-weight: 400;
         color: #fff;
