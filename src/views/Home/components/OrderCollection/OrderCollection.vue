@@ -3,12 +3,12 @@
     <div class="data-collection">
       <div class="movein" @click="openCalendar" >
         <div class="top">入住</div>
-        <div class="text">{{ personStay.moveIn }}</div>
+        <div class="text">{{ formatMoveIn }}</div>
       </div>
       <div class="range">共{{rangeDate}}晚</div>
       <div class="moveout" @click="openCalendar"  >
         <div class="top">离店</div>
-        <div class="text">{{ personStay.moveOut }}</div>
+        <div class="text">{{ formatMoveOut }}</div>
       </div>
       <div class="price-range">价格不限</div>
       <div class="person-count">人数不限</div>
@@ -34,43 +34,54 @@
 
 <script setup>
 import dayjs from "dayjs";
-import { dateDiff, outputMMDD,formatNewDate } from "@/utils/handleDate";
+import { dateDiff,formatNewDate } from "@/utils/handleDate";
 import { Calendar } from "vant";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import {getCalendarListApi} from '@/apis/home/getCalendarListApi'
+import { useHouseDataStore } from "@/store/useHouseDataStore/useHouseDataStore";
+import { storeToRefs } from "pinia";
 
-
+// 显示与隐藏日历
 const calendarIsShow = ref(false);
 
-// 住宿的日期区间
-// 当前日期
-const nowDay = ref(dayjs())
-// 当前日期+1天
-const nextDay = ref(nowDay.value.add(1,'day'))
-// 入住日期
-const personStay=ref({
-    moveIn:outputMMDD(nowDay.value),
-    moveOut:outputMMDD(nextDay.value)
+// 引入仓库
+const houseDataStore = useHouseDataStore()
+
+// 解构订单入住与离开时间
+const {moveInDate,moveOutDate} = storeToRefs(houseDataStore)
+
+// 模板中显示的日期
+// 入住
+const formatMoveIn = computed(() => {
+  return moveInDate.value.format('MM月DD日')
 })
-// 总入住天数
-const rangeDate = computed(() => {
-    return dateDiff(nowDay.value,nextDay.value,'day')
+// 退房
+const formatMoveOut = computed(() => {
+  return moveOutDate.value.format('MM月DD日')
 })
 
-// 自定义默认日期范围
-const minDate = ref(formatNewDate(nowDay.value))
-const maxDate = ref(formatNewDate(nowDay.value.add(5,'month')))
+// 总入住天数
+const rangeDate = computed(() => {
+    return dateDiff(moveInDate.value,moveOutDate.value,'day')
+})
+
+// 自定义默认日期范围 格式：new Date(2010, 0, 1)
+const minDate = ref(formatNewDate(moveInDate.value))
+const maxDate = ref(formatNewDate(moveOutDate.value.add(5,'month')))
 
 // 自定义节假日
 const holidayVo = ref([])
 
-// 从外部接口里获取的日期
-const reciveDateList = ref([])
-getCalendarListApi().then((result) => {
-  reciveDateList.value = result.data
-holidayVo.value = reciveDateList.value.holidayVo
+// 从外部接口里获取的节假日
+
+onMounted(async() => {
+    const result = await getCalendarListApi()
+  
+    holidayVo.value = result.data.data.holidayVo
+  
 
 })
+
 // 自定义日期文案
 function formatter(day) {
   const month = day.date.getMonth() + 1;
@@ -125,11 +136,11 @@ function openCalendar() {
  * @param dataRange 日期范围
  */
 function onConfirm(dataRange) {
- const [moveinDate,moveOutDate] = dataRange
- nowDay.value = moveinDate
- nextDay.value = moveOutDate
- personStay.value.moveIn = outputMMDD(moveinDate)
- personStay.value.moveOut = outputMMDD(moveOutDate)
+  // 得到选择的标准时间
+ const [selectInDate,selectOutDate] = dataRange
+  // 更改store里共享的订单时间
+  houseDataStore.setRangeDate(selectInDate,selectOutDate)
+  // 关闭弹框
  calendarIsShow.value = false
 
 }
