@@ -1,7 +1,7 @@
 <template>
     <div class="tabbar">
         <Tabbar v-model="currentIndex">
-            <template v-for="(item, index) in tabbarList" :key="index" >
+            <template v-for="(item, index) in tabbarList" :key="index">
                 <TabbarItem :to="item.path">
                     <template v-slot:icon>
                         <img :src="getImageUrl(item[index !== currentIndex ? 'img' : 'imageActive'])">
@@ -19,13 +19,21 @@
 import { Tabbar, TabbarItem } from 'vant';
 import { getImageUrl } from '@/utils/getAssetURL'
 import tabbarList from '@/assets/jsons/tabbar';
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
+// 初始path
+const currentIndex = ref(0)
+const route = useRoute()
 
-
-const currentIndex = ref(1)
-
-
+// 监听当前页面的path
+watch(() => route.path, (newPath) => {
+    const nowPathIndex = tabbarList.findIndex((item) => {
+        return newPath === item.path
+    })
+    // 赋值给当前index
+    currentIndex.value = nowPathIndex
+})
 
 </script>
 
