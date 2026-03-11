@@ -21,6 +21,11 @@ export default defineConfig({
         target: 'https://m.tujia.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/tujiaApi/, ''),
+      },
+      '/myApi':{
+        target: 'http://localhost:3000/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/myApi/, ''),
       }
     }
   }
