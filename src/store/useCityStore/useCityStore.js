@@ -7,7 +7,8 @@ export const useCityStore = defineStore("cityStore", () => {
   const cityList = ref([]);
   // 城市信息
   const cityInfo = ref({
-    cityName:'北京'
+    cityName:'西安',
+    cityId:17
   })
   // 历史城市列表
   const historyCities =ref({})

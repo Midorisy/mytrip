@@ -8,12 +8,16 @@
 
 <script setup>
 import { getHotTagsApi } from "@/apis/home/getHotTagsApi";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const tagList = ref([]);
-getHotTagsApi().then((res) => {
-  tagList.value = res.data.otherConfig.hotSuggests;
-});
+
+
+onMounted(async() => {
+ const result = await  getHotTagsApi()
+ tagList.value = result.data.data.otherConfig.hotSuggests;
+
+})
 </script>
 
 <style scoped>
