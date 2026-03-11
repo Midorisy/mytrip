@@ -1,7 +1,6 @@
 <template>
   <div class="city-tab">
-    <Dialog></Dialog>
-    <Tabs
+        <Tabs
       v-model:active="active"
       line-height="2px"
       title-active-color="#ff9854"
@@ -10,12 +9,12 @@
         v-for="(citys, index) in cityArea"
         :key="index"
         :name="citys"
-        :title="cityList[citys].title"
+        :title="cityList[citys]?.title"
       ></Tab>
     </Tabs>
     <div class="content">
-      <IndexBar highlight-color="#999" :index-list="indexList" :sticky="false">
-        <!-- 历史城市开始 -->
+      <IndexBar highlight-color="#999" :index-list="indexList"  :sticky="false">
+                <!-- 历史城市开始 -->
         <template v-if="historyShows">
           <IndexAnchor class="hot-title"
             >历史城市<span @click="clearHistory" class="clear"
@@ -30,7 +29,7 @@
                   v-for="city in cityStore.historyCities[active]"
                   :key="city.cityId"
                 >
-                  <span @click="clickCity(hotCity)" class="cityName">{{
+                  <span @click="clickCity(city)" class="cityName">{{
                     city.cityName
                   }}</span>
                 </div>
@@ -39,11 +38,11 @@
           </Cell>
         </template>
         <!-- 历史城市结束 -->
-        <!-- 热门城市开始 -->
+                <!-- 热门城市开始 -->
         <IndexAnchor class="hot-title" index="#"> 热门城市 </IndexAnchor>
         <Cell>
           <template #title>
-            <div class="hot-cities">
+            <div class="hot-cities" >
               <div
                 class="city-cell"
                 v-for="hotCity in contentData.hotCities"
@@ -91,45 +90,69 @@ import { useRouter } from "vue-router";
 // 获取router
 const router = useRouter();
 
-//标签栏绑定的数据
-const active = ref(null);
+// 加载状态
+const isLoading = ref(true)
+
+// tab栏绑定的active
+const active = ref(null)
 
 // 获取cityStore仓库
 const cityStore = useCityStore();
-cityStore.getCityList();
+// 异步数据和方法
 const { cityList, historyCities } = storeToRefs(cityStore);
 
-// 是否显示历史城市
+
+// 根据cityList组织国内和海外的数据
+const cityArea = computed(() => {
+  if (isLoading.value) {
+    return []
+  }
+
+  return Object.keys(cityList.value).slice(0, 2);
+})
+
+// 城市列表展示内容
+const contentData = computed(() => {
+  return cityList.value[active.value] || {hotCities:[],cities:[]}
+});
+
+// 展示indexList索引字符列表
+const indexList = computed(() => {
+  // 如果不存在的，返回[]
+  if (!contentData.value) {
+    return ['#']
+  }
+  const cityLetters = contentData.value.cities.map((item) => {
+    return item.group;
+  });
+
+  return ['#',...cityLetters];
+});
+
+// 判断历史数据是否展示的变量
 const historyShows = computed(() => {
-  //historyCities.value[active.value].length
-  if (!historyCities.value[active.value]) {
+    if (!historyCities.value[active.value]) {
     return false;
   }
   if (historyCities.value[active.value].length === 0) {
     return false;
   }
-  return true;
-});
+  return historyCities.value[active.value].length > 0;
+})
 
-// 收集cityArea名字列表
-const cityArea = Object.keys(cityList.value).slice(0, 2);
 
-// 初始化active
-active.value = cityArea[0];
+onMounted(async() => {
+  // 在组件挂载时获取数据
+  // 发送请求，从远程获取cityList数据到仓库
+   try {
+    await cityStore.getCityList()
+  
+  } finally {
+    isLoading.value = false
+  }
+  
+})
 
-// content板块内的数据
-const contentData = computed(() => {
-  return cityList.value[active.value];
-});
-
-// index栏的内容
-const indexList = computed(() => {
-  const cityLetters = contentData.value.cities.map((item) => {
-    return item.group;
-  });
-
-  return ["#", ...cityLetters];
-});
 
 /**
  * 点击清除所有历史城市数据
@@ -165,7 +188,10 @@ function clickCity(cityInfo) {
   // 返回上一页
   router.back();
 }
+
 </script>
+
+
 
 <style scoped>
 .city-tab {

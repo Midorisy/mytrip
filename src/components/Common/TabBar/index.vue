@@ -18,7 +18,7 @@
 <script setup>
 import { Tabbar, TabbarItem } from 'vant';
 import { getImageUrl } from '@/utils/getAssetURL'
-import tabbarList from '@/assets/data/tabbar';
+import tabbarList from '@/assets/jsons/tabbar';
 import { ref } from 'vue';
 
 

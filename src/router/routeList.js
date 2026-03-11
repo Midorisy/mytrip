@@ -6,7 +6,7 @@ export default [
     {
         name:'Home',
         path:'/home',
-        component:()=>import('@/views/Home/Home.vue')
+        component:()=>import('@/views/Home/index.vue')
     },
     {
         name:'Favor',

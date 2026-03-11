@@ -1,13 +1,15 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { getCityListApi } from "@/apis/city/getCityListApi";
-import tempJsonCity from './tempJson.json'
 
 export const useCityStore = defineStore("cityStore", () => {
+  // 城市列表
   const cityList = ref([]);
+  // 城市信息
   const cityInfo = ref({
     cityName:'北京'
   })
+  // 历史城市列表
   const historyCities =ref({})
 
   // 国内(含港澳台)
@@ -19,7 +21,7 @@ export const useCityStore = defineStore("cityStore", () => {
 
     return cityList.value.cityGroupOverSea ?? [];
   });
-
+  // 其他cityid
   const flowCityIds = computed(() => {
     return cityList.value.flowCityIds ?? [];
   });
@@ -58,9 +60,8 @@ export const useCityStore = defineStore("cityStore", () => {
    */
   async function getCityList() {
     try {
-        const result = tempJsonCity
-    //   const result = await getCityListApi();
-      cityList.value = result.data
+      const result = await getCityListApi();
+      cityList.value = result.data.data
     } catch (error) {
       console.error(error);
     }

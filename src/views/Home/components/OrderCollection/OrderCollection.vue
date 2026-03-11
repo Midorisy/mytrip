@@ -23,33 +23,99 @@
       color="#ff9854"
       class="calendar-style"
       :show-confirm="false"
+      :formatter="formatter"
+      :min-date="minDate"
+      :max-date="maxDate"
     >
-      <!-- <template #subtitle>标题</template> -->
+    <template #title> 自定义标题</template>
     </Calendar>
   </div>
 </template>
 
 <script setup>
 import dayjs from "dayjs";
-import { dateDiff, outputMMDD } from "@/utils/handleDate";
+import { dateDiff, outputMMDD,formatNewDate } from "@/utils/handleDate";
 import { Calendar } from "vant";
 import { computed, ref } from "vue";
+import {getCalendarListApi} from '@/apis/home/getCalendarListApi'
 
 
 const calendarIsShow = ref(false);
 
 // 住宿的日期区间
+// 当前日期
 const nowDay = ref(dayjs())
+// 当前日期+1天
 const nextDay = ref(nowDay.value.add(1,'day'))
+// 入住日期
 const personStay=ref({
     moveIn:outputMMDD(nowDay.value),
     moveOut:outputMMDD(nextDay.value)
 })
+// 总入住天数
 const rangeDate = computed(() => {
     return dateDiff(nowDay.value,nextDay.value,'day')
 })
 
+// 自定义默认日期范围
+const minDate = ref(formatNewDate(nowDay.value))
+const maxDate = ref(formatNewDate(nowDay.value.add(5,'month')))
 
+// 自定义节假日
+const holidayVo = ref([])
+
+// 从外部接口里获取的日期
+const reciveDateList = ref([])
+getCalendarListApi().then((result) => {
+  reciveDateList.value = result.data
+holidayVo.value = reciveDateList.value.holidayVo
+
+})
+// 自定义日期文案
+function formatter(day) {
+  const month = day.date.getMonth() + 1;
+      const date = day.date.getDate();
+      // console.log(day);
+      // 遍历节假日列表，设置每一天的显示
+      if (holidayVo.value.length !== 0) {
+        holidayVo.value.forEach((item) => {
+          
+          if (dayjs(item.holidayDate).isSame(day.date)) {
+            // console.log(day);
+
+            // 设置休息日
+            if (item.reset) {
+              day.topInfo = item.reset
+              
+              // 设置节假日
+              if (item.holiday) {
+                day.topInfo= item.holiday
+              }
+
+            }
+
+          }
+
+        })
+      }
+
+
+      // 设置入住和离店
+     if (day.type === 'start') {
+        day.bottomInfo = '入住';
+      } else if (day.type === 'end') {
+        day.bottomInfo = '离店';
+      }
+  
+      // 设置节假日显示
+
+
+      return day
+}
+
+/**
+ * 点击时修改calendarIsShow，弹出日历
+ */
 function openCalendar() {
     calendarIsShow.value = true
 }
@@ -125,8 +191,16 @@ function onConfirm(dataRange) {
 
   /* 日期的样式 */
 --van-calendar-popup-height:100%;
-  .calendar-style {
 
-  }
+
+
 }
+
+  :deep(.van-calendar__day){
+    font-weight: 600;
+     :deep(.van-calendar__top-info){
+      font-size: 14px;
+     }
+  }
+
 </style>
