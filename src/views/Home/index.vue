@@ -20,6 +20,7 @@
                 >开始搜索</Button>
                 <span class="text">民宿预定服务由黑马网提供</span>
             </div>
+            <WaterFall></WaterFall>
     </div>
 </template>
 
@@ -30,6 +31,7 @@ import HomeBanner from './components/HomeBanner/HomeBanner.vue';
 import HomeLocation from './components/HomeLocation/HomeLocation.vue';
 import OrderCollection from './components/OrderCollection/OrderCollection.vue';
 import HotTags from './components/Hot-Tags/HotTags.vue';
+import WaterFall from './components/WaterFall/WaterFall.vue';
 </script>
 
 <style scoped>
@@ -44,8 +46,10 @@ import HotTags from './components/Hot-Tags/HotTags.vue';
         font-size: 18px;
         font-weight: 400;
         color: #fff;
+        margin-bottom: 5px;
     }
     .text {
+        margin-top: 5px;
         font-size:10px;
         color: #999;
     }
