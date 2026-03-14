@@ -1,5 +1,7 @@
 <template>
     <div class="home">
+        <!-- 吸顶的搜索工具栏 -->
+        <fixed-search class="fixed-search" ></fixed-search>
         <!-- 顶部标题 -->
         <nav-bar></nav-bar>
         <!-- 图片展示栏 -->
@@ -32,6 +34,7 @@ import HomeLocation from './components/HomeLocation/HomeLocation.vue';
 import OrderCollection from './components/OrderCollection/OrderCollection.vue';
 import HotTags from './components/Hot-Tags/HotTags.vue';
 import WaterFall from './components/WaterFall/WaterFall.vue';
+import FixedSearch from '@/components/home/FixedSearch.vue';
 </script>
 
 <style scoped>
@@ -53,6 +56,11 @@ import WaterFall from './components/WaterFall/WaterFall.vue';
         font-size:10px;
         color: #999;
     }
+}
+.fixed-search{
+    position: fixed;
+    top: 0;
+    z-index: 999;
 }
 }
 
