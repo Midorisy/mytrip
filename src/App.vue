@@ -10,8 +10,12 @@ const route = useRoute()
   <div class="main">
     <router-view></router-view>
     <!-- 底部导航栏 -->
-    <tab-bar v-if="!route.meta.hideTabbar"></tab-bar>
+    <tab-bar class="tabbar" v-if="!route.meta.hideTabbar"></tab-bar>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+ #app {
+  min-width: 375px;
+ }
+</style>
