@@ -1,5 +1,6 @@
 import axios from "axios"
 import { generateFasTraceId } from "@/apis/createTujiaUid"
+import { useLoading } from "@/hooks/useLoading"
 
 export const instanceForTencentMap = axios.create({
     baseURL:import.meta.env.VITE_API_TENCENTMAP,
@@ -14,6 +15,10 @@ export const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
 
+    // 显示加载动画
+    const { showLoading } = useLoading()
+    showLoading()
+
     // 如果config.params不存在
     if (!config.params) {
         config.params = {}
@@ -21,4 +26,11 @@ instance.interceptors.request.use((config) => {
     Object.assign(config.params,generateFasTraceId())
 
     return config
+})
+
+instance.interceptors.response.use((response) => {
+    // 隐藏加载动画
+    const { close } = useLoading()
+    close()
+    return response
 })
