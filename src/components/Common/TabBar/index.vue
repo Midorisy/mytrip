@@ -31,6 +31,9 @@ watch(() => route.path, (newPath) => {
     const nowPathIndex = tabbarList.findIndex((item) => {
         return newPath === item.path
     })
+    if (nowPathIndex === -1) {
+        return
+    }
     // 赋值给当前index
     currentIndex.value = nowPathIndex
 })
