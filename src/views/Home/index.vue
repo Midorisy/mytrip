@@ -33,15 +33,17 @@ import OrderCollection from "./components/OrderCollection/OrderCollection.vue";
 import HotTags from "./components/Hot-Tags/HotTags.vue";
 import WaterFall from "./components/WaterFall/WaterFall.vue";
 import FixedSearch from "@/components/home/FixedSearch.vue";
-import onRecord from "@/components/home/onRecord.vue";
-import { usePageHight } from "@/utils/usePageHight";
+import onRecord from "@/components/home/OnRecord.vue";
+import { throttle } from "radash";
 import { onMounted, ref } from "vue";
 
+
 const searchBarisShow = ref(false);
+
 // 页面需要滚动的距离
 const pageScroll = document.documentElement.clientHeight - 250;
 // 监听页面滚动事件
-window.addEventListener("scroll", () => {
+window.addEventListener("scroll", throttle({interval:100},() => {
   // 监听页面上方已滚动的距离
   const scrollTop = document.documentElement.scrollTop || 0;
   if (scrollTop > pageScroll) {
@@ -49,10 +51,11 @@ window.addEventListener("scroll", () => {
   } else {
     searchBarisShow.value = false
   }
-});
+}));
+
+
 
 onMounted(() => {
-
 });
 </script>
 
