@@ -4,8 +4,8 @@
             <template #left-icon></template>
             <template #left>
                 <div class="dateSelect">
-                    <div class="checkin"><span>住</span> 03.14</div>
-                    <div class="checkout"><span>离</span> 03.15</div>
+                    <div class="checkin"><span>住</span> {{ moveInDate.format('MM.DD') }}</div>
+                    <div class="checkout"><span>离</span> {{ moveOutDate.format('MM.DD') }}</div>
                 </div>
             </template>
             <template #right-icon>
@@ -17,6 +17,9 @@
 
 <script setup>
 import { Search, Icon } from 'vant';
+import { useHouseDataStore } from '@/store/useHouseDataStore/useHouseDataStore';
+import { storeToRefs } from 'pinia';
+const {moveInDate,moveOutDate} = storeToRefs(useHouseDataStore());
 </script>
 
 <style scoped>
