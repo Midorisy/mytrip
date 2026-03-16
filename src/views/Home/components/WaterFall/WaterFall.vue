@@ -15,7 +15,8 @@
                     </div>
                 </div>
             </div>
-            <house-type class="item-card" :card="card" v-for="(card,index) in cardList" :key="index" ></house-type>
+            <house-type  -type class="item-card" :card="card" v-for="(card,index) in cardList" :key="index" ></house-type>
+            
         </div>
     </div>
 </template>
@@ -23,26 +24,47 @@
 <script setup>
 import HouseType from '@/components/home/HouseType.vue';
 import { getCardStream } from '@/apis/home/getCardStreamApi';
-import { computed, onMounted,ref } from 'vue';
-
+import { computed, onMounted,onUnmounted,ref,watch } from 'vue';
+import { usePageBottom } from "@/utils/usePageBottom";
+// 第一个卡片的数据
 const firstCardList = ref({})
+// 卡片列表
 const cardList = ref([])
+// 使用自定义的 usePageBottom 组合函数
+const { isBottom, cleanup } = usePageBottom();
+
+// 页面第0页
+const page = ref(0);
+
+// 监听页面是否滚动到了底部
+watch(isBottom, async (newValue) => {
+  if (newValue) {
+    // 在这里执行加载更多数据的逻辑
+    page.value++
+    const result = await getCardStream(page.value)
+    // 将新的数据追加到现有的卡片列表中
+    cardList.value = [...cardList.value, ...result.data.data.stream.slice(1)]
+  }
+});
 
 onMounted(async() => {
-    const result = await getCardStream()
+    const result = await getCardStream(page.value)
     
     firstCardList.value = result.data.data.stream[0].data
     cardList.value = result.data.data.stream.slice(1)
-    console.log(cardList.value);
+
 })
+
+onUnmounted(() => {
+    // 组件卸载时，调用 cleanup 函数移除事件监听器
+    cleanup();
+});
 
 </script>
 
 <style scoped>
     .water-fall{
         position: relative;
-        height: 550px;
-        margin-bottom:250px;
         background-color: #fff;
         margin-top: 10px;
         padding: 0 20px;
@@ -73,7 +95,6 @@ onMounted(async() => {
 
             column-count: 2;           /* 列数 */
             column-gap: 20px;   
-
 
             /* 第一个导航卡片 */
             .first-card {
