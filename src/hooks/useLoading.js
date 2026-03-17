@@ -1,25 +1,41 @@
 import { ref } from 'vue'
 
-const gloablLoading = ref(true)
+// 全局状态
+const globalLoading = ref(false)
+
+// 新增计数器
+let requestCount = 0
 
 export function useLoading() {
     const showLoading = (value) => {
-        gloablLoading.value = value
+        globalLoading.value = value
     }
     
     const open = () => {
-        gloablLoading.value = true
+            console.log('已被打开');
+        requestCount++
+        if (requestCount==1) {
+            globalLoading.value = true
+            
+        }
+
     }
 
     const close = () => {
-        gloablLoading.value = false
+        console.log("已被关闭");
+        requestCount--
+        if (requestCount<=0) {
+            requestCount = 0
+            globalLoading.value = false
+        }
+        
     }
 
     return {
         showLoading,
         open,
         close,
-        gloablLoading
+        globalLoading
     }
 
 }

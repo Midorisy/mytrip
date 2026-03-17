@@ -1,5 +1,5 @@
 <template>
-    <div v-if="gloablLoading" @click="closePop" class="loading-pop" @touchmove.prevent @wheel.prevent >
+    <div v-show="gloablLoading" @click="closePop" class="loading-pop" @touchmove.prevent @wheel.prevent >
         <div class="loading-content">
             <img src="@/assets/img/home/full-screen-loading.gif" alt="" srcset="">
         </div>
