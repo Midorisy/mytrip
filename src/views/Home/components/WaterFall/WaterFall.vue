@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <house-type  -type class="item-card" :card="card" v-for="(card,index) in cardList" :key="index" ></house-type>
+            <house-type @click="handleCardClick(card)" class="item-card" :card="card" v-for="(card,index) in cardList" :key="index" ></house-type>
             
         </div>
     </div>
@@ -26,6 +26,11 @@ import HouseType from '@/components/home/HouseType.vue';
 import { getCardStream } from '@/apis/home/getCardStreamApi';
 import { computed, onMounted,onUnmounted,ref,watch } from 'vue';
 import { usePageBottom } from "@/utils/usePageBottom";
+import { useRouter } from 'vue-router';
+
+// 路由器实例
+const router = useRouter()
+
 // 第一个卡片的数据
 const firstCardList = ref({})
 // 卡片列表
@@ -35,6 +40,15 @@ const { isBottom, cleanup } = usePageBottom();
 
 // 页面第0页
 const page = ref(0);
+
+// 处理卡片点击事件
+function handleCardClick(card) {
+    console.log('已点击', card);
+    router.push({
+        name: 'HouseInfo',
+        params: { id: card.data.houseId }
+    })
+}
 
 // 监听页面是否滚动到了底部
 watch(isBottom, async (newValue) => {
