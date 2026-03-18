@@ -28,9 +28,9 @@ onMounted(async() => {
   flex-wrap: wrap;
   align-content: flex-start;
   padding: 10px 20px;
-  /* background-color: pink; */
   height: 172px;
-  border-bottom: 1px solid #f2f2f2;
+  background-color: #fff;
+  overflow: hidden;
 
   /* 每一个tag */
   .tag-cell {

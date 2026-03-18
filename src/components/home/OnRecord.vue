@@ -23,19 +23,15 @@
 
 <style scoped>
 .on-record{
-    width: 100%;
     height: 98px;
     background-color: rgb(51, 51, 51);
     color: #eee;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
     position: relative;
+    /* 解决塌陷问题 */
+    overflow: hidden;
 
     .footer{
-        width: 100%;
-        padding: 20px;
+        margin-top: 20px;
         ul {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -53,10 +49,8 @@
         }
     }
     .icp{
-        position: absolute;
-        bottom: -10px;
         text-align: center;
-
+        margin-top: 10px;
         span{
             font-size: 11px;
             color: #999;

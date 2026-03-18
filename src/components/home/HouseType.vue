@@ -109,7 +109,7 @@ const starRate = Number(card.data.commentScore);
         line-height: 16px;
         padding: 0 4px;
         text-align: center;
-        font-size: 11px;
+        font-size: 10px;
         color: #666;
         border-radius: 15px;
         background-color: #fff;

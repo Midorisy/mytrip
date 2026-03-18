@@ -17,7 +17,15 @@ const route = useRoute()
 </template>
 
 <style scoped>
- #app {
-  min-width: 375px;
+ .main {
+  width: 100%;
+
+  .tabbar{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+  }
  }
 </style>

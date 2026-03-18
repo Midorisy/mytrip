@@ -33,7 +33,7 @@ function toHomePage() {
     --van-search-padding: 8px 20px;
     border-bottom: 1px solid #eee;
 
-    :deep(input[class="van-field__control"]::placeholder) {
+    &:deep(input[class="van-field__control"]::placeholder) {
         color: #999;
     }
 }

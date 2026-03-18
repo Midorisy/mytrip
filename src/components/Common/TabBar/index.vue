@@ -44,13 +44,19 @@ watch(() => route.path, (newPath) => {
 /* 导航栏 */
 .tabbar {
     --van-tabbar-item-active-color: #ff9854;
+    --van-tabbar-height:55px;
+    height: 55px;
+    background-color: pink;
+    &:deep(.van-tabbar){
+        position: static;
+    }
 
     img {
-        height: 24px;
+        height: 28px;
     }
 
     .text {
-        font-size: 14px;
+        font-size: 12px;
     }
 
 }

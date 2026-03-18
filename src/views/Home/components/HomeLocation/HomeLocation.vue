@@ -96,10 +96,12 @@ function getMyPosition() {
     font-size: 15px;
     align-items: center;
     border-bottom: 1px solid #f2f2f2;
-
+    background-color: #fff;
     .city {
         flex: 1;
-        /* color: #666; */
+        font-size: 14px;
+        font-weight: 600;
+        color: #555;
     }
 
     .position {

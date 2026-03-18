@@ -148,7 +148,7 @@ function onConfirm(dataRange) {
 
 <style scoped>
 .order-collection {
-    
+    background-color: #fff;
   .data-collection {
     /* background-color: pink; */
     padding: 0 20px;

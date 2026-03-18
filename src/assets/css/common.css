@@ -8,4 +8,21 @@
     /* 浅色背景颜色 */
     --light-background-color:#f1f3f6;
     --button-linear-gradient:linear-gradient(90deg, #fa8c1d, #fcaf3f);
+    /* 瀑布流页面背景色 */
+    --waterFall-background-color:#F5F7F9;
+}
+
+html {
+    background-color: #fff; 
+    /* 新增：给html设置背景色 */
+}
+
+div {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
 }

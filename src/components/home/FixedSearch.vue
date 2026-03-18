@@ -27,9 +27,7 @@ const {moveInDate,moveOutDate} = storeToRefs(useHouseDataStore());
     --van-search-padding: 5px 15px 5px 30px;
     --van-search-input-height: 45px;
     --van-field-placeholder-text-color: #999;
-    width: 100%;
-    .van-search.search {
-        width: 100%;
+    &:deep(.van-search.search) {
         height: 71px;
 
         /* input搜索框前面的日期选择 */
@@ -39,11 +37,11 @@ const {moveInDate,moveOutDate} = storeToRefs(useHouseDataStore());
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 40px;
+            width: 56px;
             height: 45px;
             background-color: #f7f8fa;
             padding: 0 5px;
-            font-size: 10px;
+            font-size: 11px;
             color: #333;
             border-radius: 5px 0 0 5px;
             border-right: 2px solid #fff;
@@ -66,7 +64,6 @@ const {moveInDate,moveOutDate} = storeToRefs(useHouseDataStore());
             }
         }
         .search-icon{
-            color: #999;
             font-size: 24px;
         }
     }
