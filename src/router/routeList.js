@@ -30,5 +30,13 @@ export default [
         meta:{
             hideTabbar:true
         }
+    },
+    {
+        name:'HouseInfo',
+        path:'/houseInfo/detail/:id',
+        component:()=>import('@/views/HouseInfo/HouseInfo.vue'),
+        meta:{
+            hideTabbar:true
+        }
     }
 ]
