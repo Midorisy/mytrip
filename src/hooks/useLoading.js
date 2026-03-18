@@ -12,7 +12,6 @@ export function useLoading() {
     }
     
     const open = () => {
-            console.log('已被打开');
         requestCount++
         if (requestCount==1) {
             globalLoading.value = true
@@ -22,7 +21,6 @@ export function useLoading() {
     }
 
     const close = () => {
-        console.log("已被关闭");
         requestCount--
         if (requestCount<=0) {
             requestCount = 0
