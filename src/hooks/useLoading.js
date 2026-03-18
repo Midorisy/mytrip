@@ -13,7 +13,7 @@ export function useLoading() {
     
     const open = () => {
         requestCount++
-        if (requestCount==1) {
+        if (requestCount===1) {
             globalLoading.value = true
             
         }

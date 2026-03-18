@@ -1,5 +1,7 @@
 <template>
-    <div v-show="gloablLoading" @click="closePop" class="loading-pop" @touchmove.prevent @wheel.prevent >
+    <div v-show="globalLoading" @click="closePop" class="loading-pop"
+    @wheel.prevent  @touchmove.prevent 
+      >
         <div class="loading-content">
             <img src="@/assets/img/home/full-screen-loading.gif" alt="" srcset="">
         </div>
@@ -8,8 +10,14 @@
 
 <script setup>
 import { useLoading } from '@/hooks/useLoading';
+import { onMounted } from 'vue';
 
-const { gloablLoading, close } = useLoading()
+const { globalLoading, close } = useLoading()
+
+onMounted(() => {
+    console.log(globalLoading.value);
+})
+
 
 function closePop() {
     console.log('触发一次点击事件');
@@ -19,29 +27,29 @@ function closePop() {
 
 <style scoped>
 .loading-pop {
+    position: relative;
     position: fixed;
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    padding: 20px;
-    border-radius: 10px;
+    background-color: #ddd;
     z-index: 999;
 
     /* loading内容 */
     .loading-content {
-        width: 100%;
-        height: 100%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        width: 100px;
+        height: 100px;
         display: flex;
         justify-content: center;
         align-items: center;
 
         img {
-            width: 70px;
-            height: 70px;
+            width: 56px;
+            height: 56px;
         }
     }
 }
