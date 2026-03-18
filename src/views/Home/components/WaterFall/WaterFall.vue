@@ -27,9 +27,13 @@ import { getCardStream } from '@/apis/home/getCardStreamApi';
 import { computed, onMounted,onUnmounted,ref,watch } from 'vue';
 import { usePageBottom } from "@/utils/usePageBottom";
 import { useRouter } from 'vue-router';
+import { useHouseParameter } from '@/store/useHouseParameter/houseParameter';
 
 // 路由器实例
 const router = useRouter()
+
+// 房屋数据的仓库
+const houseParameter = useHouseParameter()
 
 // 第一个卡片的数据
 const firstCardList = ref({})
@@ -43,7 +47,10 @@ const page = ref(0);
 
 // 处理卡片点击事件
 function handleCardClick(card) {
-    console.log('已点击', card);
+
+    // 传入当前的id
+    houseParameter.setHouseId(card.data.houseId)
+    // 路由前往房屋详情页
     router.push({
         name: 'HouseInfo',
         params: { id: card.data.houseId }
@@ -52,7 +59,9 @@ function handleCardClick(card) {
 
 // 监听页面是否滚动到了底部
 watch(isBottom, async (newValue) => {
+   
   if (newValue) {
+     return
     // 在这里执行加载更多数据的逻辑
     page.value++
     const result = await getCardStream(page.value)
@@ -79,10 +88,9 @@ onUnmounted(() => {
 <style scoped>
     .water-fall{
         position: relative;
-        background-color: #fff;
-        margin-top: 10px;
+        background-color: var(--waterFall-background-color);
         padding: 0 20px;
-        padding-top: 60px;
+        padding-top: 70px;
 
         /* 渐变背景 */
         &::before{
@@ -92,7 +100,7 @@ onUnmounted(() => {
             left: 0;
             width: 100%;
             height: 50px;
-            background: linear-gradient(to bottom , #eee,white);
+            background: linear-gradient(to bottom , #eee,var(--waterFall-background-color));
         }
         /* 热门精选 */
         .title {
@@ -129,7 +137,6 @@ onUnmounted(() => {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                /* background-color: pink; */
                 text-align: center;
                 width: 147px;
                 height: 50px;
