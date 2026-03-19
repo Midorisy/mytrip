@@ -61,7 +61,6 @@ function handleCardClick(card) {
 watch(isBottom, async (newValue) => {
    
   if (newValue) {
-     return
     // 在这里执行加载更多数据的逻辑
     page.value++
     const result = await getCardStream(page.value)
