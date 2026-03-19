@@ -2,6 +2,7 @@
     <div class="house-info">
         <top-bar></top-bar>
         <photo-swipe :photoSwiperData="photoSwiperData " ></photo-swipe>
+        <time-banner></time-banner>
         <house-description></house-description>
     </div>
 </template>
@@ -11,6 +12,7 @@
 import TopBar from '@/components/houseInfo/TopBar.vue'
 import PhotoSwipe from '@/components/houseInfo/PhotoSwipe.vue'
 import HouseDescription from '@/components/houseInfo/HouseDescription.vue';
+import TimeBanner from '@/components/houseInfo/TimeBanner.vue';
 // 引入接口函数
 import { computed, onMounted, ref } from 'vue';
 import { getHouseData } from '@/apis/houseInfo';
@@ -33,7 +35,7 @@ const photoSwiperData = ref([])
 onMounted(async() => {
    const result = await getHouseData()
    const houseData = result.data.data
-   photoSwiperData.value = houseData.mainPart.topModule.housePicture.housePics
+   photoSwiperData.value = houseData.mainPart.topModule.housePicture
     console.log(photoSwiperData.value);
 })
 
@@ -41,7 +43,6 @@ onMounted(async() => {
 
 <style scoped>
 .house-info{
-    width: 100%;
         background-color: #F1F3F5;
         height: 1500px;
 }
