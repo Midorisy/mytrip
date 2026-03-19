@@ -26,9 +26,7 @@
         </div>
         <div class="map">
           <div class="icon"></div>
-          <div class="text">
-            地图/周边
-          </div>
+          <div class="text">地图/周边</div>
         </div>
       </div>
     </div>
@@ -44,14 +42,17 @@
   height: 154px;
   padding: 12px 16px;
   background-color: #fff;
+
   .title {
     font-weight: 600;
     font-size: 16px;
   }
+
   .tags {
     margin-top: 10px;
     display: flex;
     font-size: 10px;
+
     .tag {
       box-sizing: border-box;
       height: 15px;
@@ -63,102 +64,111 @@
       margin: 0 2px;
     }
   }
+
   .rate-location {
     margin-top: 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     height: 66px;
 
     .rate {
-      background-color: #F7F8FC;
+      background-color: #f7f8fc;
       width: 100px;
       height: 66px;
       display: flex;
+      flex: none;
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
       padding: 8px;
+      margin-right: 10px;
+
       .score-count {
         height: 18px;
         display: flex;
         align-items: baseline;
+
         .score {
           font-size: 12px;
           margin-right: 5px;
+
           .big {
             font-size: 18px;
           }
         }
+
         .count {
           font-size: 10px;
           color: #999;
         }
       }
     }
+
     .location {
       height: 66px;
-      width: 236px;
       display: flex;
-      background-color: #F7F8FC;
-      background-image: url('@/assets/img/home/map_bg.png');
-      background-position: 120px,0px;
-      background-size: contain;
+      flex: 1;
+      background-color: #f7f8fc;
+      background-image: url("@/assets/img/home/map_bg.png");
+      background-position: 120px 0px;
+      background-size: cover;
       background-repeat: no-repeat;
-
-      justify-content: space-around;
       align-items: center;
 
       .address {
-        width: 162px;
         height: 50px;
-        /* background-color: pink; */
-        .address-title{
-            font-size: 14px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        flex: 1;
+        min-width: 0;
+        width: 167px;
+
+        .address-title {
+          font-size: 14px;
+          white-space: nowrap; /* 单行不换行 */
+          overflow: hidden; /* 隐藏超出部分 */
+          text-overflow: ellipsis; /* 超出显示省略号 */
+          margin-bottom: 5px; /* 替代原来的margin-top，更合理 */
 
         }
-        .description{
-            margin-top: 5px;
-            line-height: 1.5;
-            font-size: 10px;
-            color: #999;
+
+        .description {
+          line-height: 1.5;
+          font-size: 10px;
+          color: #999;
         }
       }
+
       .map {
-        
-        color: #8DA5CD;
+        color: #8da5cd;
         display: flex;
+        flex: none;
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
         height: 50px;
+        width: 50px;
+
         .icon {
           position: relative;
-          background-color: #8DA5CD;
-
-
+          background-color: #8da5cd;
           border-radius: 50%;
-         
           width: 25px;
           height: 25px;
 
-          &::before{
+          &::before {
             position: absolute;
             content: "";
             width: 25px;
             height: 25px;
             top: 3px;
             left: 3px;
-          background-image: url('@/assets/img/home/location.png');
-          background-repeat: no-repeat;
-          background-size: 20px;
+            background-image: url("@/assets/img/home/location.png");
+            background-repeat: no-repeat;
+            background-size: 20px;
           }
         }
-        .text{
-          font-size: 12px;
+
+        .text {
+          font-size: 10px;
         }
       }
     }
