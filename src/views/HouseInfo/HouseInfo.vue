@@ -4,6 +4,15 @@
         <photo-swipe :photoSwiperData="photoSwiperData " ></photo-swipe>
         <time-banner></time-banner>
         <house-description></house-description>
+        <housing-resource></housing-resource>
+        <guest-reviews></guest-reviews>
+        <house-fitment></house-fitment>
+        <owner-intro></owner-intro>
+        <reservation-notes></reservation-notes>
+        <nearby-locations></nearby-locations>
+        <similar-house></similar-house>
+        <info-footer></info-footer>
+        <submit-order></submit-order>
     </div>
 </template>
 
@@ -13,6 +22,15 @@ import TopBar from '@/components/houseInfo/TopBar.vue'
 import PhotoSwipe from '@/components/houseInfo/PhotoSwipe.vue'
 import HouseDescription from '@/components/houseInfo/HouseDescription.vue';
 import TimeBanner from '@/components/houseInfo/TimeBanner.vue';
+import HousingResource from './HousingResource/HousingResource.vue';
+import GuestReviews from './GuestReviews/GuestReviews.vue';
+import HouseFitment from './HouseFitment/HouseFitment.vue';
+import OwnerIntro from './OwnerIntro/OwnerIntro.vue';
+import ReservationNotes from './ReservationNotes/ReservationNotes.vue';
+import NearbyLocations from './NearbyLocations/NearbyLocations.vue';
+import SimilarHouse from './SimilarHouse/SimilarHouse.vue';
+import InfoFooter from './InfoFooter/InfoFooter.vue';
+import SubmitOrder from './SubmitOrder/SubmitOrder.vue';
 // 引入接口函数
 import { computed, onMounted, ref } from 'vue';
 import { getHouseData } from '@/apis/houseInfo';
@@ -44,6 +62,6 @@ onMounted(async() => {
 <style scoped>
 .house-info{
         background-color: #F1F3F5;
-        height: 1500px;
+
 }
 </style>
